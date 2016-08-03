@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block nav %}
+    <div id="menu" class="container">
+        <div class="row">
+            <div class="col-lg-13 text-lg-center">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('forum') }}">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('dashboard') }}">Dashboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for category in categories %}
+            <div id="row-from-forum" class="row">
+                <div class="category_info">
+                    <ul>
+                        <li>{{ category.getTitle() }}</li>
+                        <li class="nboftopics">Topics</li>
+                    </ul>
+                </div>
+                {% for subcategory in subcategories if category.id == subcategory.getCategory().getId() %}
+                    <div class="col-lg-13 text-center">
+                        <div class="list-group">
+                            <a href="{{ path('forum_topics', {'category': category.getTitle()|lower|replace({' ': "-", '\'': "-"}), 'subcategory': subcategory.getTitle()|lower|replace({' ': "-", '\'': "-"})}) }}" class="list-group-item">
+                                <h4 class="list-group-item-heading">{{ subcategory.getTitle() }}</h4>
+                                <p class="list-group-item-text">{{ subcategory.getDescription() }}</p>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

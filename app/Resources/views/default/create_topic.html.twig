@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a topic{% endblock %}
+
+{% block nav %}
+    <div id="menu" class="container">
+        <div class="row">
+            <div class="col-lg-13 text-lg-center">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('dashboard') }}">Dashboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div id="create_topic" class="container">
+        <div class="col-lg-12">
+            <div class="topic">
+                {{ form_start(create_topic) }}
+                    {{ form_errors(create_topic) }}
+                    <fieldset class="form-group">
+                        {{ form_row(create_topic.topic) }}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        {{ form_row(create_topic.text) }}
+                    </fieldset>
+                {{ form_end(create_topic) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+display:
+    resource: "@ForumBundle/Controller/DisplayController.php"
+    type:     annotation
+
+category:
+    resource: "@ForumBundle/Controller/CategoryController.php"
+    type:     annotation
+
+topic:
+    resource: "@ForumBundle/Controller/TopicController.php"
+    type:     annotation
+
+user:
+    resource: "@ForumBundle/Controller/UserController.php"
+    type:     annotation
+
+thread:
+    resource: "@ForumBundle/Controller/ThreadController.php"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /forum/profile
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /forum/resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /forum/profile

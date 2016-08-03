@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Category{% endblock %}
+
+{% block body %}
+    <div id="menu" class="container">
+        <div class="dropdown open">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Administration
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{{ path('dashboard_category') }}">Categories</a>
+                <a class="dropdown-item" href="{{ path('dashboard_subcategory') }}">Subcategories</a>
+                <a class="dropdown-item" href="#">Users</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('forum') }}">Forum</a>
+            </div>
+        </div>
+    </div>
+    <div id="category" class="container">
+        <div class="col-lg-12">
+            <div id="create_category">
+                {{ form_start(create_category) }}
+                    {{ form_errors(create_category) }}
+                    <fieldset class="form-group">
+                        {{ form_row(create_category.title) }}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        {{ form_row(create_category.isPosted) }}
+                    </fieldset>
+                {{ form_end(create_category) }}
+            </div>
+            <div id="update_category">
+                {{ form_start(update_category) }}
+                    {{ form_errors(update_category) }}
+                    <label>Update Category</label>
+                    <fieldset class="form-group">
+                        {{ form_row(update_category.title) }}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        {{ form_row(update_category.isPosted) }}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        {{ form_row(update_category.new_name) }}
+                    </fieldset>
+                {{ form_end(update_category) }}
+            </div>
+            <div id="delete_category">
+                {{ form_start(delete_category) }}
+                    {{ form_errors(delete_category) }}
+                    <fieldset class="form-group">
+                        {{ form_row(delete_category) }}
+                    </fieldset>
+                {{ form_end(delete_category) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

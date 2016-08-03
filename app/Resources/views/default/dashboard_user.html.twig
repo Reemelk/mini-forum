@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - User{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="dropdown open">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Administration
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{{ path('dashboard_category') }}">Categories</a>
+                <a class="dropdown-item" href="{{ path('dashboard_subcategory') }}">Subcategories</a>
+                <a class="dropdown-item" href="{{ path('dashboard_users') }}">Users</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('forum') }}">Forum</a>
+            </div>
+        </div>
+    </div>
+    <div id="user" class="container">
+        <div id="user_infos" class="container">
+            {{ form_start(update_user) }}
+                {{ form_errors(update_user) }}
+
+                {{ form_row(update_user.username) }}
+                {{ form_row(update_user.enabled) }}
+                {{ form_row(update_user.new_username) }}
+                {{ form_row(update_user.email) }}
+            {{ form_end(update_user) }}
+        </div>
+        <div id="" class="container">
+            {{ form_start(ban_user) }}
+                {{ form_errors(ban_user) }}
+
+                {{ form_row(ban_user.username) }}
+                {{ form_row(ban_user.locked) }}
+                {{ form_row(ban_user.locked_for) }}
+                {{ form_row(ban_user.locked_message) }}
+            {{ form_end(ban_user) }}
+        </div>
+    </div>
+{% endblock %}

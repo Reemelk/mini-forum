@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Topics{% endblock %}
+
+{% block nav %}
+    <div id="menu" class="container">
+        <div class="row">
+            <div class="col-lg-13 text-lg-center">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('dashboard') }}">Dashboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div id="btn-create-topic" class="container">
+        <a class="btn btn-info-outline" href="{{ path('create_topic', {'category': category, 'subcategory': subcategory}) }}" role="button">Create a topic</a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="topic_info">
+                <ul>
+                    <li>Name</li>
+                    <li class="threads">Threads</li>
+                </ul>
+            </div>
+            {% for topic in topics %}
+                <div class="col-lg-13 text-center">
+                    <div class="list-group">
+                        <a href="{{ path('forum_topic', {'category': category, 'subcategory': subcategory, 'topic': topic.hyphenation }) }}" class="list-group-item">
+                            <h4 class="list-group-item-heading">{{ topic.getTitle() }}</h4>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

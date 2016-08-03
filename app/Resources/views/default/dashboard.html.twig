@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <div id="dropdown" class="container">
+        <div class="dropdown open">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Administration
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{{ path('dashboard_category') }}">Categories</a>
+                <a class="dropdown-item" href="{{ path('dashboard_subcategory') }}">Subcategories</a>
+                <a class="dropdown-item" href="{{ path('dashboard_users') }}">Users</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('forum') }}">Forum</a>
+            </div>
+        </div>
+
+        <div id="dashboard" class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-3 text-lg-center">Dashboard</h1>
+                <p class="lead text-lg-center">This dashboard allows to manage categories/subcategories and users' data.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
