@@ -50,4 +50,21 @@
             </div>
         {% endfor %}
     </div>
+    <div class="container" id="last-topics">
+        {#
+        {% for last_topic in last_topics %}
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active">
+                    <h5 class="list-group-item-heading">{{ last_topic.getTopic.getTitle }}</h5>
+                    <p class="list-group-item-text">{{ last_topic.getText }}</p>
+                </a>
+            </div>
+        {% endfor %}
+        #}
+    </div>
+    <div class="container" id="who-is-online">
+        {% for user in users %}
+            {{ user }}
+        {% endfor %}
+    </div>
 {% endblock %}

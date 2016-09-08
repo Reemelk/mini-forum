@@ -22,7 +22,6 @@
     use ForumBundle\Form\User\updateUserType;
     use ForumBundle\Form\User\banUserType;
 
-
     class DisplayController extends Controller
     {
         /**
@@ -42,8 +41,15 @@
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('ForumBundle:Category')->findAllCategories();
             $subcategories = $em->getRepository('ForumBundle:Subcategory')->findAllSubcategories();
-            
-            return $this->render('default/forum.html.twig', ['categories' => $categories, 'subcategories' => $subcategories]);
+            $users = $em->getRepository('ForumBundle:User')->findOnlineUsers();
+            $last_topics = $em->getRepository('ForumBundle:Thread')->findLastTopics();
+
+            return $this->render('default/forum.html.twig', [
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'users' => $users,
+                'last_topics' => $last_topics
+            ]);
         }
 
         /**

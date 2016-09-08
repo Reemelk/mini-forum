@@ -18,4 +18,12 @@
                 ->setParameter('topic', $topic)
                 ->getResult();
         }
+
+        public function findLastTopics($how_many = 4)
+        {
+            return $this->getEntityManager()
+                ->createQuery('SELECT th FROM ForumBundle:Thread th ORDER BY th.timestamp DESC')
+                ->setMaxResults($how_many)
+                ->getResult();
+        }
     }

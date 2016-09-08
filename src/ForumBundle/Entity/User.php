@@ -4,9 +4,10 @@
 
     use FOS\UserBundle\Model\User as BaseUser;
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     /**
-     * @ORM\Entity
+     * @ORM\Entity(repositoryClass="ForumBundle\Entity\Repository\UserRepository")
      * @ORM\Table(name="fos_user")
      */
     class User extends BaseUser
@@ -21,15 +22,26 @@
         /**
          * @ORM\Column(type="datetime", nullable=true)
          */
-        protected $locked_for;
+        protected $locked_time;
         
         /**
          * @ORM\Column(type="string", nullable=true)
          */
         protected $locked_message;
 
+        /**
+         * @ORM\Column(type="datetime")
+         */
+        protected $lastActivityAt;
 
+        /**
+         * @ORM\Column(type="simple_array")
+         */
+        private $userIP;
 
+        //////////////////////////////////////////////
+        ////////////Setters & Getters/////////////////
+        //////////////////////////////////////////////
 
         public function __construct()
         {
@@ -51,29 +63,29 @@
 
             return $this;
         }
-        
+
         /**
-         * Set lockedFor
+         * Set lockedTime
          *
-         * @param \DateTime $lockedFor
+         * @param \DateTime $lockedTime
          *
          * @return User
          */
-        public function setLockedFor($lockedFor = null)
+        public function setLockedTime($lockedTime)
         {
-            $this->locked_for = $lockedFor;
+            $this->locked_time = $lockedTime;
 
             return $this;
         }
 
         /**
-         * Get lockedFor
+         * Get lockedTime
          *
          * @return \DateTime
          */
-        public function getLockedFor()
+        public function getLockedTime()
         {
-            return $this->locked_for;
+            return $this->locked_time;
         }
 
         /**
@@ -98,5 +110,68 @@
         public function getLockedMessage()
         {
             return $this->locked_message;
+        }
+
+        /**
+         * Set lastActivityAt
+         *
+         * @param \DateTime $lastActivityAt
+         *
+         * @return User
+         */
+        public function setLastActivityAt($lastActivityAt)
+        {
+            $this->lastActivityAt = $lastActivityAt;
+
+            return $this;
+        }
+
+        /**
+         * Get lastActivityAt
+         *
+         * @return \DateTime
+         */
+        public function getLastActivityAt()
+        {
+            return $this->lastActivityAt;
+        }
+
+        public function isActiveNow()
+        {
+            $delay = new \DateTime('2 minutes ago');
+
+            return $this->getLastActivityAt() > $delay;
+        }
+    
+        /**
+         * Set userIP
+         *
+         * @param array $userIP
+         *
+         * @return User
+         */
+        public function setUserIP($userIP)
+        {
+            if (count($this->userIP) >= 10) {
+                for ($i = 0; $i <= 8; $i++) {
+                    $this->UserIP[$i] == $this->userIP[$i + 1];
+                }
+                //$this->UserIP[9] == $userIP;
+                $this->userIP[9] = implode(",", $userIP);
+            }
+            else
+                $this->userIP[] = implode(",", $userIP);
+
+            return $this;
+        }
+
+        /**
+         * Get userIP
+         *
+         * @return array
+         */
+        public function getUserIP()
+        {
+            return $this->userIP;
         }
     }

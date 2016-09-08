@@ -30,7 +30,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "symfony/var-dumper": "~3.0",
-        "twbs/bootstrap": "4.0.0-alpha.2"
+        "twbs/bootstrap": "4.0.0-alpha.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

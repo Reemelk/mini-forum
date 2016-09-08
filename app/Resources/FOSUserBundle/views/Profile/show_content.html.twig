@@ -1,0 +1,19 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="fos_user_user_show">
+    <div class="container">
+        <div class="col-lg-13 text-center">
+            <p>test</p>
+            <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+            <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+            <div class="col-lg-4 text-center">
+                <p>Last IPs:</p>
+                <ul class="list-group">
+                    {% for i in 0..user.getUserIP|length - 1 %}
+                        <li class="list-group-item">{{ user.getUserIP[i] }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

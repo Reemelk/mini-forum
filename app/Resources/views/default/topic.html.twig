@@ -29,7 +29,7 @@
 
 {% block body %}
     <div id="title_topic" class="container">
-       <h2>{{ topic.title }}</h2>
+       {{ topic.getTitle }}
     </div>
     {% for thread in threads %}
         <div class="container thread">
@@ -41,6 +41,13 @@
                 <p class="user_message">{{ thread.getText }}</p>
             </div>
             {{ thread.getTimestamp()|date('Y-m-d H:i') }}
+            {% if thread.getLastUpdateBy is not null or thread.getLastUpdateAt is not null %}
+                {{ thread.getLastUpdateBy }}
+                {{ thread.getLastUpdateAt|date('Y-m-d H:i') }}
+            {% endif %}
+            {% if thread.getUser == app.user or is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('get_edit_message', {'category': category, 'subcategory': subcategory, 'topic': topic.hyphenation, 'id': thread.getId}) }}" type="button" class="btn btn-outline-info">Edit</a>
+            {% endif %}
         </div>
     {% endfor %}
     <div class="container reply">

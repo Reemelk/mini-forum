@@ -40,6 +40,17 @@
          */
         private $timestamp;
 
+        /**
+         * @ORM\ManyToOne(targetEntity="ForumBundle\Entity\User")
+         * @ORM\JoinColumn(name="user_id_update", referencedColumnName="id")
+         */
+        private $lastUpdateBy;
+
+        /**
+         * @ORM\Column(type="datetime", nullable=true)
+         */
+        private $lastUpdateAt;
+
         //////////////////////////////////////////////
         ////////////Setters & Getters/////////////////
         //////////////////////////////////////////////
@@ -158,5 +169,54 @@
         public function __toString()
         {
             return $this->text;
+        }
+    
+        /**
+         * Set lastUpdateAt
+         *
+         * @param \DateTime $lastUpdateAt
+         *
+         * @return Thread
+         */
+        public function setLastUpdateAt($lastUpdateAt)
+        {
+            $this->lastUpdateAt = $lastUpdateAt;
+
+            return $this;
+        }
+
+        /**
+         * Get lastUpdateAt
+         *
+         * @return \DateTime
+         */
+        public function getLastUpdateAt()
+        {
+            return $this->lastUpdateAt;
+        }
+
+        /**
+         * Set lastUpdateBy
+         *
+         * @param \ForumBundle\Entity\User $lastUpdateBy
+         *
+         * @return Thread
+         */
+        public function setLastUpdateBy(\ForumBundle\Entity\User $lastUpdateBy = null)
+        {
+           if (($this->user != $lastUpdateBy && $this->lastUpdateBy == null) || ($this->user == $lastUpdateBy && $this->lastUpdateBy != null))
+               $this->lastUpdateBy = $lastUpdateBy;
+
+            return $this;
+        }
+
+        /**
+         * Get lastUpdateBy
+         *
+         * @return \ForumBundle\Entity\User
+         */
+        public function getLastUpdateBy()
+        {
+            return $this->lastUpdateBy;
         }
     }

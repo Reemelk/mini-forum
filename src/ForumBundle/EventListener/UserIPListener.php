@@ -2,7 +2,6 @@
 
     namespace ForumBundle\EventListener;
 
-    use ForumBundle\Entity\User;
     use FOS\UserBundle\FOSUserEvents;
     use FOS\UserBundle\Event\UserEvent;
     use FOS\UserBundle\Model\UserManagerInterface;
@@ -10,17 +9,17 @@
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
     use Symfony\Component\Security\Http\SecurityEvents;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
-
-    class BanUserListener implements EventSubscriberInterface
+    class UserIPListener implements EventSubscriberInterface
     {
-        protected $userManager;
-        protected $session;
+        private $userManager;
+        private $requestStack;
 
-        public function __construct(UserManagerInterface $userManager)
+        public function __construct(UserManagerInterface $userManager, RequestStack $requestStack)
         {
             $this->userManager = $userManager;
+            $this->requestStack = $requestStack;
         }
 
         public static function getSubscribedEvents()
@@ -34,20 +33,20 @@
         public function onImplicitLogin(UserEvent $event)
         {
             $user = $event->getUser();
-            if ($user instanceof User) {
-                $time_atm = new \DateTime();
-                if ($user->isLocked() && $user->getLockedTime() > $time_atm) {
-                    $this->addFlash('warning', 'You have been banned.');
-                    return $this->redirectToRoute('logout');
-                }
-            }
+
+            $ip[] = $this->requestStack->getCurrentRequest()->getClientIp();
+            $user->setUserIP($ip);
+            $this->userManager->updateUser($user);
         }
 
         public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
         {
             $user = $event->getAuthenticationToken()->getUser();
+
             if ($user instanceof UserInterface) {
-                //////
+                $ip[] = $this->requestStack->getCurrentRequest()->getClientIp();
+                $user->setUserIP($ip);
+                $this->userManager->updateUser($user);
             }
         }
     }
