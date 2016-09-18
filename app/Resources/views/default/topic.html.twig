@@ -11,7 +11,7 @@
                         <a class="nav-link active" href="{{ path('forum') }}">Forum</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -31,25 +31,27 @@
     <div id="title_topic" class="container">
        {{ topic.getTitle }}
     </div>
-    {% for thread in threads %}
-        <div class="container thread">
-            <div class="user_info">
-                <img src="..." alt="..." class="img-rounded">
-                <p class="user_name">{{ thread.getUser }}</p>
+        {% for thread in threads %}
+            <div class="container thread">
+                <div class="user_thread">
+                    <div class="img_profile">
+                        <h4 class="username">{{ thread.getUser }}</h4>
+                    </div>
+                    <div class="user_message">
+                        <p>{{ thread.getText }}</p>
+                        <div class="info_thread">
+                            <div class="posted_message">Posted : {{ thread.getTimestamp()|date('Y-m-d H:i') }}</div>
+                            {% if thread.getLastUpdateBy is not null or thread.getLastUpdateAt is not null %}
+                                <div class="edited_message">Edited {{ thread.getLastUpdateAt|date('Y-m-d H:i') }} By {{ thread.getLastUpdateBy }}</div>
+                            {% endif %}
+                            {% if thread.getUser == app.user or is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('get_edit_message', {'category': category, 'subcategory': subcategory, 'topic': topic.hyphenation, 'id': thread.getId}) }}" type="button" class="edit_button">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="user_text">
-                <p class="user_message">{{ thread.getText }}</p>
-            </div>
-            {{ thread.getTimestamp()|date('Y-m-d H:i') }}
-            {% if thread.getLastUpdateBy is not null or thread.getLastUpdateAt is not null %}
-                {{ thread.getLastUpdateBy }}
-                {{ thread.getLastUpdateAt|date('Y-m-d H:i') }}
-            {% endif %}
-            {% if thread.getUser == app.user or is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('get_edit_message', {'category': category, 'subcategory': subcategory, 'topic': topic.hyphenation, 'id': thread.getId}) }}" type="button" class="btn btn-outline-info">Edit</a>
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% endfor %}
     <div class="container reply">
         {{ form_start(new_reply) }}
             {{ form_errors(new_reply) }}

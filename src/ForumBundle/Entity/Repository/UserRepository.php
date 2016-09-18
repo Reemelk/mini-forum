@@ -22,4 +22,19 @@
                 ->setParameter('delay', $delay)
                 ->getResult();
         }
+
+        public function findTotalUser()
+        {
+            return $this->getEntityManager()
+                ->createQuery('SELECT COUNT(u.id) FROM ForumBundle:User u')
+                ->getSingleScalarResult();
+        }
+
+        public function findLastUserRegistered()
+        {
+            return $this->getEntityManager()
+                ->createQuery('SELECT u FROM ForumBundle:User u ORDER BY u.registered_at DESC')
+                ->setMaxResults(1)
+                ->getSingleResult();
+        }
     }

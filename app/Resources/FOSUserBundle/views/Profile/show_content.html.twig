@@ -1,19 +1,44 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block nav %}
+    <div id="menu" class="container">
+        <div class="row">
+            <div class="col-lg-13 text-lg-center">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('forum') }}">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('fos_user_profile_show') }}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('dashboard') }}">Dashboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 <div class="fos_user_user_show">
-    <div class="container">
-        <div class="col-lg-13 text-center">
-            <p>test</p>
+    <div class="container text-lg-center">
+        <div class="col-lg-13">
             <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
             <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-            <div class="col-lg-4 text-center">
-                <p>Last IPs:</p>
-                <ul class="list-group">
+            <div id="ips_list" class="col-lg-4">
+                <ul class="list-group text-lg-center">
+                    <p>Last IPs</p>
                     {% for i in 0..user.getUserIP|length - 1 %}
                         <li class="list-group-item">{{ user.getUserIP[i] }}</li>
                     {% endfor %}
                 </ul>
             </div>
+            <a id="btn-edit-profile" class="btn btn-info-outline" href="{{ path('fos_user_profile_edit') }}" role="button">Edit profile</a>
         </div>
     </div>
 </div>

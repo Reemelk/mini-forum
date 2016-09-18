@@ -1,0 +1,27 @@
+<div class="container">
+    <div id="forum_info" class="row">
+        <p class="board_statistics">Board Statistics</p>
+        <div class="col-lg-8">
+            {% if users|length <= 1 %}
+                <p>There is 1 user active in past 2 minutes</p>
+                <p class="user_length">Member active : </p>
+            {% else %}
+                <p>There are {{ users|length }} users active in past 2 minutes</p>
+                <p class="user_length">Members active : </p>
+            {% endif %}
+            <p class="user_length">
+                {% for user in users %}
+                    {% if loop.index + 1 is empty %}
+                        {{ user }}
+                    {% else %}
+                        {{ user|join(',') }}
+                    {% endif %}
+                {%  endfor %}
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>We have {{ total_user }} users registered</p>
+            <p>Welcome to the newest member, {{ last_registered }}</p>
+        </div>
+    </div>
+</div>

@@ -30,12 +30,17 @@
         protected $locked_message;
 
         /**
-         * @ORM\Column(type="datetime")
+         * @ORM\Column(type="datetime", nullable=true)
          */
         protected $lastActivityAt;
 
         /**
-         * @ORM\Column(type="simple_array")
+         * @ORM\Column(type="datetime")
+         */
+        protected $registered_at;
+
+        /**
+         * @ORM\Column(type="simple_array", nullable=true)
          */
         private $userIP;
 
@@ -46,6 +51,7 @@
         public function __construct()
         {
             parent::__construct();
+            $this->registered_at = new \DateTime();
         }
 
         public function setEmail($email)
@@ -153,14 +159,12 @@
         public function setUserIP($userIP)
         {
             if (count($this->userIP) >= 10) {
-                for ($i = 0; $i <= 8; $i++) {
-                    $this->UserIP[$i] == $this->userIP[$i + 1];
-                }
-                //$this->UserIP[9] == $userIP;
+                for ($i = 0; $i <= 8; $i++)
+                    $this->userIP[$i] = $this->userIP[$i + 1];
                 $this->userIP[9] = implode(",", $userIP);
             }
             else
-                $this->userIP[] = implode(",", $userIP);
+                $this->userIP[] = implode($userIP);
 
             return $this;
         }
